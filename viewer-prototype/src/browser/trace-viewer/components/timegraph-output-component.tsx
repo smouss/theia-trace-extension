@@ -135,35 +135,16 @@ export class TimegraphOutputComponent extends AbstractTreeOutputComponent<Timegr
     }
 
     renderChart(): React.ReactNode {
-        this.closeTooltip = this.closeTooltip.bind(this);
         return <React.Fragment>
             {this.state.outputStatus === ResponseStatus.COMPLETED ?
                 <div id='timegraph-main' className='ps__child--consume' onWheel={ev => { ev.preventDefault(); ev.stopPropagation(); }}>
                     {this.renderTimeGraphContent()}
                     {this.state.isClicked && this.state.isTooltipOpened &&
-                        <TooltipComponent tooltip={this.renderTooltip()} closeTooltip={this.closeTooltip} >
+                        <TooltipComponent tooltip={this.toolTipObject} closeTooltip={this.closeTooltip} >
                         </TooltipComponent>
                     }
                 </div> :
                 'Analysis running...'}
-        </React.Fragment>
-    }
-
-    renderTooltip() {
-        const tooltipArray: any[] = [];
-        if (this.toolTipObject) {
-            const keys = Object.keys(this.toolTipObject);
-            keys.forEach(key => {
-                tooltipArray.push(<p key={key}>{key + ': ' + this.toolTipObject[key]}</p>);
-            });
-        }
-        else {
-            console.log('Tooltip null');
-        }
-        return <React.Fragment>
-            {tooltipArray.map(element => {
-                return element;
-            })}
         </React.Fragment>
     }
 
